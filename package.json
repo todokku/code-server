@@ -1,7 +1,7 @@
 {
   "name": "@coder/code-server",
   "license": "MIT",
-  "version": "3.2.0",
+  "version": "3.2.0-rc.5",
   "description": "Run VS Code on a remote server.",
   "homepage": "https://github.com/cdr/code-server",
   "bugs": {

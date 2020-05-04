@@ -59,6 +59,12 @@ bundle_code_server() {
     rm -Rf "$RELEASE_PATH/node_modules"
   fi
 
+  if [[ $PACKAGE_NODE && $MINIFY ]]; then
+    pushd "$RELEASE_PATH"
+    yarn --production
+    popd
+  fi
+
   # Adds the commit to package.json
   jq --slurp '.[0] * .[1]' package.json <(
     cat << EOF
@@ -70,12 +76,6 @@ bundle_code_server() {
   }
 EOF
   ) > "$RELEASE_PATH/package.json"
-
-  if [[ $PACKAGE_NODE && $MINIFY ]]; then
-    pushd "$RELEASE_PATH"
-    yarn --production
-    popd
-  fi
 }
 
 bundle_vscode() {

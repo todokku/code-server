@@ -3,6 +3,7 @@ set -euo pipefail
 
 # Generates self contained code-server release for CI.
 # This script assumes that the release is built already.
+#
 
 main() {
   cd "$(dirname "${0}")/../.."

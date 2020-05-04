@@ -8,7 +8,7 @@ main() {
   cd "$(dirname "${0}")/../.."
 
   local output
-  output=$(node ./release --list-extensions 2>&1)
+  output=$(./release/code-server --list-extensions 2>&1)
   if echo "$output" | grep 'was compiled against a different Node.js version'; then
     echo "$output"
     exit 1

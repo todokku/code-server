@@ -7,9 +7,9 @@ main() {
   yarn
   yarn vscode
   yarn build
-  yarn release
+  PACKAGE_NODE=true yarn release
   ./ci/build/test-release.sh
-  ./ci/build/package-static-release.sh
+  ./ci/build/archive-release.sh
 }
 
 main "$@"
