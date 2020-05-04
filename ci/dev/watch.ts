@@ -13,12 +13,9 @@ async function main(): Promise<void> {
 }
 
 class Watcher {
-  private readonly rootPath = path.resolve(__dirname, "..")
+  private readonly rootPath = path.resolve(__dirname, "../..")
   private readonly vscodeSourcePath = path.join(this.rootPath, "lib/vscode")
 
-  /**
-   * Writes to stdout with an optional newline.
-   */
   private static log(message: string, skipNewline = false): void {
     process.stdout.write(message)
     if (!skipNewline) {

@@ -17,7 +17,7 @@ PACKAGE_NODE="${PACKAGE_NODE-}"
 MINIFY="${MINIFY-true}"
 
 main() {
-  cd "$(dirname "${0}")/.."
+  cd "$(dirname "${0}")/../.."
   source ./ci/lib.sh
 
   mkdir -p "$RELEASE_PATH"
@@ -30,11 +30,11 @@ main() {
   rsync ./lib/vscode/ThirdPartyNotices.txt "$RELEASE_PATH"
 
   if [[ $PACKAGE_NODE ]]; then
-    rsync "$(command -v node)" ./build
-    rsync ./ci/code-server.sh "$RELEASE_PATH/code-server"
+    rsync "$(command -v node)" "$RELEASE_PATH/node"
+    rsync ./ci/build/code-server.sh "$RELEASE_PATH/code-server"
   else
     rm -Rf "$RELEASE_PATH/node"
-    rm -Rf "$RELEASE_PATH/code-server.sh"
+    rm -Rf "$RELEASE_PATH/code-server"
   fi
 }
 

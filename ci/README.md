@@ -9,5 +9,3 @@ This directory contains scripts used for code-server's continuous integration in
 | fmt.sh  | Ensures all code is formatted correctly          |
 | lint.sh | Ensures all code passes linters and typechecking |
 | ci.sh   | Runs yarn fmt, yarn lint and yarn test           |
-
-|

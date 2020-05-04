@@ -7,15 +7,15 @@ main() {
   source ./ci/lib.sh
   VERSION="$(code-server_version)"
 
-  if [[ ${CI:-} ]]; then
+  if [[ ${CI-} ]]; then
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   fi
 
   imageTag="codercom/code-server:$VERSION"
-  if [[ ${TRAVIS_CPU_ARCH:-} == "arm64" ]]; then
+  if [[ ${TRAVIS_CPU_ARCH-} == "arm64" ]]; then
     imageTag+="-arm64"
   fi
-  docker build -t "$imageTag" -f ./ci/release-image/Dockerfile .
+  docker build --build-arg FIXUID_ARCH=${TRAVIS_CPU_ARCH-amd64} -t "$imageTag" -f ./ci/release-container/Dockerfile .
   docker push codercom/code-server
 }
 

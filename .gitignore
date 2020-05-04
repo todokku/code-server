@@ -1,8 +1,8 @@
 *.tsbuildinfo
 .cache
-build
 dist*
 out*
-release/
-release-upload/
+release
+release-github/
+release-gcp/
 node_modules

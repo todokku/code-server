@@ -7,14 +7,14 @@ set -euo pipefail
 MINIFY=${MINIFY-true}
 
 main() {
-  cd "$(dirname "${0}")/.."
-  source ./ci/lib.sh
+  cd "$(dirname "${0}")/../.."
 
   npx tsc --outDir out --tsBuildInfoFile ./.out.tsbuildinfo
   # If out/node/entry.js does not already have the shebang,
   # we make sure to add it and make it executable.
   if ! grep -q -m1 '^#!/usr/bin/env node' out/node/entry.js; then
     sed -i '1s;^;#!/usr/bin/env node\n;' out/node/entry.js
+    chmod +x out/node/entry.js
   fi
 
   npx parcel build \

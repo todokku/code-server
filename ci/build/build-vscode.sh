@@ -7,9 +7,7 @@ set -euo pipefail
 MINIFY=${MINIFY-true}
 
 main() {
-  cd "$(dirname "${0}")/.."
-  source ./ci/lib.sh
-
+  cd "$(dirname "${0}")/../.."
   cd lib/vscode
 
   yarn gulp compile-build

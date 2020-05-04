@@ -2,7 +2,6 @@
 set -euo pipefail
 
 code-server_version() {
-  set
   jq -r .version package.json
 }
 
@@ -11,5 +10,5 @@ pushd() {
 }
 
 popd() {
-  builtin popd "$@" > /dev/null
+  builtin popd > /dev/null
 }

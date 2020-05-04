@@ -4,17 +4,17 @@ jobs:
   include:
     - name: Test
       if: tag IS blank
-      script: ./ci/image/run.sh "yarn && git submodule update --init && yarn vscode:patch && ./ci/test.sh"
+      script: ./ci/container/exec.sh ./ci/steps/test.sh
       deploy: null
     - name: Linux Release
       if: tag IS present
       script:
-        - travis_wait 60 ./ci/image/run.sh "yarn && yarn vscode && ci/release.sh && ./ci/test-build.sh"
+        - travis_wait 60 ./ci/container/exec.sh ./ci/steps/release.sh
         - ./ci/release-image/push.sh
     - name: Linux ARM64 Release
       if: tag IS present
       script:
-        - ./ci/image/run.sh "yarn && yarn vscode && ci/release.sh && ./ci/test-build.sh"
+        - travis_wait 60 ./ci/container/exec.sh ./ci/steps/release.sh
         - ./ci/release-image/push.sh
       arch: arm64
     - name: MacOS Release
@@ -22,7 +22,7 @@ jobs:
       os: osx
       language: node_js
       node_js: 12
-      script: yarn && yarn vscode && travis_wait 60 ci/release.sh && ./ci/test-build.sh
+      script: ./ci/steps/release.sh
 
 before_deploy:
   - echo "$JSON_KEY" | base64 --decode > ./ci/key.json
@@ -36,8 +36,8 @@ deploy:
     target_commitish: $TRAVIS_COMMIT
     name: $TRAVIS_TAG
     file:
-      - release/*.tar.gz
-      - release/*.zip
+      - release-github/*.tar.gz
+      - release-github/*.zip
     on:
       tags: true
   - provider: gcs
@@ -45,7 +45,7 @@ deploy:
     bucket: "codesrv-ci.cdr.sh"
     upload_dir: "releases"
     key_file: ./ci/key.json
-    local_dir: release-upload
+    local_dir: release-gcp
     on:
       tags: true
       # TODO: The gcs provider fails to install on arm64.
