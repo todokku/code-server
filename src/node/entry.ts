@@ -90,6 +90,7 @@ const main = async (args: Args): Promise<void> => {
   } else {
     logger.info("  - No authentication")
   }
+  process.env.PASSWORD = undefined
 
   if (httpServer.protocol === "https") {
     logger.info(
