@@ -15,7 +15,7 @@ main() {
   if [[ ${TRAVIS_CPU_ARCH-} == "arm64" ]]; then
     imageTag+="-arm64"
   fi
-  docker build --build-arg FIXUID_ARCH=${TRAVIS_CPU_ARCH-amd64} -t "$imageTag" -f ./ci/release-container/Dockerfile .
+  docker build --build-arg "FIXUID_ARCH=${TRAVIS_CPU_ARCH-amd64}" -t "$imageTag" -f ./ci/release-container/Dockerfile .
   docker push codercom/code-server
 }
 

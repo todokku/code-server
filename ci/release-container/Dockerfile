@@ -13,6 +13,7 @@ RUN apt-get update \
     ssh \
     sudo \
     vim \
+    lsb-release \
   && rm -rf /var/lib/apt/lists/*
 
 # https://wiki.debian.org/Locale#Manually

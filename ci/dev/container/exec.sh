@@ -36,7 +36,7 @@ run() {
     "-v=$PWD:/code-server" \
     "-w=/code-server" \
     "-p=127.0.0.1:8080:8080" \
-    $([[ -t 0 ]] && echo -it || true) \
+    $(if [[ -t 0 ]]; then echo -it; fi) \
     "$container_name"
 }
 
