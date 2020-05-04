@@ -9,12 +9,12 @@ jobs:
     - name: Linux Release
       if: tag IS present
       script:
-        - travis_wait 60 ./ci/container/exec.sh ./ci/steps/release.sh
+        - travis_wait 60 ./ci/container/exec.sh ./ci/steps/static-release.sh
         - ./ci/release-image/push.sh
     - name: Linux ARM64 Release
       if: tag IS present
       script:
-        - travis_wait 60 ./ci/container/exec.sh ./ci/steps/release.sh
+        - travis_wait 60 ./ci/container/exec.sh ./ci/steps/static-release.sh
         - ./ci/release-image/push.sh
       arch: arm64
     - name: MacOS Release
@@ -22,7 +22,7 @@ jobs:
       os: osx
       language: node_js
       node_js: 12
-      script: ./ci/steps/release.sh
+      script: ./ci/steps/static-release.sh
 
 before_deploy:
   - echo "$JSON_KEY" | base64 --decode > ./ci/key.json
@@ -50,6 +50,14 @@ deploy:
       tags: true
       # TODO: The gcs provider fails to install on arm64.
       condition: $TRAVIS_CPU_ARCH = amd64
+  - provider: npm
+    src: ./release
+    api_token:
+      secure: Bj0vE+bgDgLvdlSlqsQZIjhdYweIlucIQONx6wDfV7bVkKpAcYj0vQblQ8RcBwakMD91e+bzyFVqw29Mnl2Rtl3Ij8rBPflT+Pcgi7p0onum5PsqpGb2i+X8h7SkV0h9Crlft5t05/vXCTqHiRFjloA4fAMb4mNzXG/0flEg/GVeeHgrA09fjr1WnQ09WFD1EHGlREhQgDNO0YkiL4Hzt0aU5F+mH/8klBANBCbXuXmJPi60WIbgvUEAPM41j2oIIv5B37fPHQyaw7r4KujK5bTFXCkYWl+fKqOrgD+DsN2+QMdGrHVdKilmUU6wVGltpgZhRI4/Vbz65MCSpbbilSjjPJTuvtQQiZiVVv9xV1Y09P1L1Rmd6RQlb4TL9JySX61eNiTtm/tdxypxaBYJepjK+Lijxffw7d2jqQ7nh+Pk7X0PEHki3LgAgUA3NxGcbv4a76wr/em+JUqY3z0964b46ap0LlO82NtAm9OBwAUck7lfF6RHIa4zfiq7SF4/sTfj+hFQfGlXM0rkHvWpKCFPGvnA7oAMPneqqqzCJcZCQDtmoLcV39C6ghztZvdKg5GqFnLApabLfBisUr3FtJI8/TD5R0vtHB3YIunijpGnKCE6Ux6EnAtMOvAa9s281v5NweLWQn2R5JsZbctAEAiEEON1lJ182P8cF6G4oLg=
+    edge: true
+    on:
+      tags: true
+      condition: $TRAVIS_JOB_NAME = "Linux Release"
 
 cache:
   timeout: 600

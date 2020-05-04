@@ -9,7 +9,7 @@ main() {
   yarn build
   yarn release
   ./ci/build/test-release.sh
-  ./ci/build/package-release.sh
+  ./ci/build/package-static-release.sh
 }
 
 main "$@"
